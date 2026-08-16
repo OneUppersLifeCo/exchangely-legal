@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exchangely Toolkit Family</title>
+  <meta name="description" content="Exchangely Toolkit Family — a set of simple, fast converters for fiat currency, cryptocurrency and precious metals. By Idekini, Netherlands.">
+  <link rel="canonical" href="https://exchangely.app/" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Exchangely Toolkit Family">
+  <meta property="og:description" content="Simple, fast converters for fiat currency, cryptocurrency and precious metals.">
+  <meta property="og:url" content="https://exchangely.app/">
+  <meta name="theme-color" content="#0d1117">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230b7285'/><text x='50' y='71' font-size='62' font-family='Segoe UI,sans-serif' font-weight='600' fill='white' text-anchor='middle'>E</text></svg>">
+
+  <style>
+    /* ---------- Design tokens (light) ---------- */
+    :root {
+      --bg:              #f6f8fa;
+      --bg-accent:       #e8eef3;
+      --surface:         #ffffff;
+      --surface-2:       #fbfcfd;
+      --border:          #dfe5ec;
+      --border-strong:   #c9d3de;
+      --text:            #14202b;
+      --text-muted:      #5b6b7c;
+      --text-faint:      #8797a8;
+      --brand:           #0b7285;
+      --brand-soft:      rgba(11, 114, 133, 0.10);
+      --brand-2:         #1a92a8;
+      --shadow-sm:       0 1px 2px rgba(16, 32, 48, .06), 0 2px 8px rgba(16, 32, 48, .05);
+      --shadow-lg:       0 10px 24px rgba(16, 32, 48, .10), 0 2px 6px rgba(16, 32, 48, .06);
+      --ring:            rgba(11, 114, 133, .35);
+    }
+
+    /* ---------- Design tokens (dark) ---------- */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:            #0d1117;
+        --bg-accent:     #111a24;
+        --surface:       #151d27;
+        --surface-2:     #1a232f;
+        --border:        #26313d;
+        --border-strong: #35414f;
+        --text:          #e8eef4;
+        --text-muted:    #9fb0c0;
+        --text-faint:    #74879a;
+        --brand:         #3ec3d8;
+        --brand-soft:    rgba(62, 195, 216, 0.12);
+        --brand-2:       #6fe0ef;
+        --shadow-sm:     0 1px 2px rgba(0, 0, 0, .35), 0 2px 8px rgba(0, 0, 0, .28);
+        --shadow-lg:     0 12px 28px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .3);
+        --ring:          rgba(62, 195, 216, .4);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 50% -12%, var(--brand-soft), transparent 70%),
+        linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 46%);
+      background-attachment: fixed;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    :focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--bg) 72%, transparent);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 62px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: linear-gradient(140deg, var(--brand), var(--brand-2));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      flex: none;
+    }
+    @media (prefers-color-scheme: dark) { .brand-mark { color: #08171b; } }
+
+    .nav-link {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: color .18s ease;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    /* ---------- Hero ---------- */
+    main { flex: 1 0 auto; }
+
+    .hero {
+      text-align: center;
+      padding: 76px 0 8px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--brand);
+      background: var(--brand-soft);
+      border: 1px solid color-mix(in srgb, var(--brand) 26%, transparent);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1;   transform: scale(1); }
+      50%      { opacity: .35; transform: scale(.82); }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+    }
+
+    h1 .gradient {
+      background: linear-gradient(100deg, var(--brand), var(--brand-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lede {
+      margin: 20px auto 0;
+      max-width: 560px;
+      font-size: 17px;
+      color: var(--text-muted);
+    }
+
+    /* ---------- Cards ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 56px 0 12px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      padding: 34px 24px 30px;
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-strong);
+    }
+
+    /* the ovals from the sketch */
+    .oval {
+      width: 108px;
+      height: 76px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--brand-soft);
+      border: 1.5px solid color-mix(in srgb, var(--brand) 34%, transparent);
+      color: var(--brand);
+      flex: none;
+      transition: transform .22s ease;
+    }
+    .card:hover .oval { transform: scale(1.05); }
+    .oval svg { width: 30px; height: 30px; }
+
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 14.5px;
+      color: var(--text-muted);
+      max-width: 26ch;
+    }
+
+    .badge {
+      margin-top: 4px;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      background: var(--bg);
+    }
+
+    /* ---------- Coming soon strip ---------- */
+    .coming {
+      text-align: center;
+      padding: 40px 0 84px;
+    }
+
+    .coming-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .coming-line::before,
+    .coming-line::after {
+      content: "";
+      width: clamp(28px, 12vw, 90px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      flex: none;
+      border-top: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 55%, transparent);
+    }
+
+    .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 22px 0;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .foot a { transition: color .18s ease; }
+    .foot a:hover { color: var(--brand); }
+
+    /* ---------- Entrance animation ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: rise .6s cubic-bezier(.22, .8, .3, 1) forwards;
+    }
+    .reveal:nth-child(1) { animation-delay: .05s; }
+    .reveal:nth-child(2) { animation-delay: .13s; }
+    .reveal:nth-child(3) { animation-delay: .21s; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; gap: 16px; max-width: 460px; margin: 0 auto; }
+      .hero { padding-top: 56px; }
+      .card { padding: 28px 22px; }
+    }
+
+    @media (max-width: 520px) {
+      .wrap { padding: 0 18px; }
+      .foot { justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">E</span>
+        <span>Exchangely</span>
+      </a>
+      <a class="nav-link" href="privacy.html">Privacy Policy</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span> In development</span>
+      <h1>Exchangely<br><span class="gradient">Toolkit Family</span></h1>
+      <p class="lede">A small family of fast, no-nonsense converters — one for every kind of value you need to compare.</p>
+    </section>
+
+    <section class="wrap grid" aria-label="Applications">
+
+      <!-- TODO: replace href="#" with the store / app link when the app ships -->
+      <a class="card reveal" href="#" aria-label="Fiat Currency Converter — coming soon">
+        <span class="oval" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M14.8 8.6a3.4 3.4 0 0 0-5.6 1.2M9.2 15.4a3.4 3.4 0 0 0 5.6-1.2"/>
+            <path d="M8 11h6M8 13.4h6"/>
+          </svg>
+        </span>
+        <h2>Fiat Currency</h2>
+        <p>Live rates for the world's everyday currencies.</p>
+        <span class="badge">Coming soon</span>
+      </a>
+
+      <a class="card reveal" href="#" aria-label="Crypto Currency Converter — coming soon">
+        <span class="oval" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M9.6 7.8v8.4M12.1 6.6v1.2M12.1 16.2v1.2"/>
+            <path d="M9.6 11.9h3.2a2.05 2.05 0 1 0 0-4.1H9.6M9.6 16.2h3.7a2.15 2.15 0 1 0 0-4.3"/>
+          </svg>
+        </span>
+        <h2>Crypto Currency</h2>
+        <p>Digital assets converted against any pair.</p>
+        <span class="badge">Coming soon</span>
+      </a>
+
+      <a class="card reveal" href="#" aria-label="Precious Metals Converter — coming soon">
+        <span class="oval" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8.5 7 5h10l3 3.5-8 10.5z"/>
+            <path d="M4 8.5h16M9.4 8.5 12 19M14.6 8.5 12 19M7 5l2.4 3.5M17 5l-2.4 3.5"/>
+          </svg>
+        </span>
+        <h2>Precious Metals</h2>
+        <p>Gold, silver and more — by gram, ounce or troy.</p>
+        <span class="badge">Coming soon</span>
+      </a>
+
+    </section>
+
+    <section class="wrap coming">
+      <span class="coming-line">Coming soon</span>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <span>By <strong>Idekini</strong>, Netherlands</span>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </footer>
+
+</body>
+</html>
