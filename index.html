@@ -258,7 +258,10 @@
     }
 
     .badge {
-      margin-top: 4px;
+      margin-top: auto;   /* pin to the card's foot so all three line up */
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
       font-size: 11px;
       letter-spacing: .1em;
       text-transform: uppercase;
@@ -267,6 +270,67 @@
       border-radius: 999px;
       padding: 4px 12px;
       background: var(--bg);
+    }
+
+    /* live app: filled call-to-action badge */
+    .badge--live {
+      color: #fff;
+      background: linear-gradient(140deg, var(--brand), var(--brand-2));
+      border-color: transparent;
+      font-weight: 600;
+      padding: 7px 16px;
+      box-shadow: 0 2px 8px var(--brand-soft);
+      transition: transform .22s ease, filter .22s ease;
+    }
+    @media (prefers-color-scheme: dark) { .badge--live { color: #06171b; } }
+    .badge--live svg { width: 13px; height: 13px; flex: none; }
+    .card:hover .badge--live { transform: translateY(-1px); filter: brightness(1.06); }
+
+    /* ---------- Unreleased cards: veiled + coming soon ---------- */
+    .card.soon {
+      cursor: default;
+    }
+
+    /* the sketch's ovals stay visible, just muted behind the veil */
+    .card.soon .oval,
+    .card.soon h2,
+    .card.soon p {
+      opacity: .72;
+    }
+
+    .card.soon:hover {
+      transform: none;
+      box-shadow: var(--shadow-sm);
+      border-color: var(--border);
+    }
+    .card.soon:hover .oval { transform: none; }
+
+    /* tint layer only — the label below stays in normal flow, so it always
+       lands under the text instead of on top of the app name */
+    .veil {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      background: color-mix(in srgb, var(--surface) 20%, transparent);
+      backdrop-filter: blur(.6px);
+      pointer-events: none;
+    }
+
+    .veil-text {
+      position: relative;
+      z-index: 3;
+      margin-top: auto;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      padding: 7px 16px;
+      box-shadow: var(--shadow-sm);
     }
 
     /* ---------- Coming soon strip ---------- */
@@ -363,15 +427,17 @@
 
   <main>
     <section class="wrap hero">
-      <span class="eyebrow"><span class="dot" aria-hidden="true"></span> In development</span>
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span> First app now on Google Play</span>
       <h1>Exchangely<br><span class="gradient">Toolkit Family</span></h1>
       <p class="lede">A small family of fast, no-nonsense converters — one for every kind of value you need to compare.</p>
     </section>
 
     <section class="wrap grid" aria-label="Applications">
 
-      <!-- TODO: replace href="#" with the store / app link when the app ships -->
-      <a class="card reveal" href="#" aria-label="Fiat Currency Converter — coming soon">
+      <a class="card reveal"
+         href="https://play.google.com/store/apps/details?id=com.idekiniapps.exchangely"
+         target="_blank" rel="noopener"
+         aria-label="Fiat Currency Converter — get it on Google Play">
         <span class="oval" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="9"/>
@@ -381,10 +447,17 @@
         </span>
         <h2>Fiat Currency</h2>
         <p>Live rates for the world's everyday currencies.</p>
-        <span class="badge">Coming soon</span>
+        <span class="badge badge--live">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3.6 1.9a1.3 1.3 0 0 0-.6 1.1v18a1.3 1.3 0 0 0 .6 1.1l10-10.1zM15.1 10.5 5.7 1.2l11.5 6.6zM5.7 22.8l9.4-9.3 2.1 2.1zM18.6 8.6l3.1 1.8a1.3 1.3 0 0 1 0 2.3l-3.1 1.8-2.4-2.5z"/>
+          </svg>
+          Google Play
+        </span>
       </a>
 
-      <a class="card reveal" href="#" aria-label="Crypto Currency Converter — coming soon">
+      <!-- TODO: turn into <a href="…store link…"> once the app ships, and drop .soon + .veil -->
+      <div class="card soon reveal" aria-label="Crypto Currency Converter — coming soon">
+        <span class="veil" aria-hidden="true"></span>
         <span class="oval" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="9"/>
@@ -394,10 +467,12 @@
         </span>
         <h2>Crypto Currency</h2>
         <p>Digital assets converted against any pair.</p>
-        <span class="badge">Coming soon</span>
-      </a>
+        <span class="veil-text">Coming soon</span>
+      </div>
 
-      <a class="card reveal" href="#" aria-label="Precious Metals Converter — coming soon">
+      <!-- TODO: turn into <a href="…store link…"> once the app ships, and drop .soon + .veil -->
+      <div class="card soon reveal" aria-label="Precious Metals Converter — coming soon">
+        <span class="veil" aria-hidden="true"></span>
         <span class="oval" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 8.5 7 5h10l3 3.5-8 10.5z"/>
@@ -406,13 +481,13 @@
         </span>
         <h2>Precious Metals</h2>
         <p>Gold, silver and more — by gram, ounce or troy.</p>
-        <span class="badge">Coming soon</span>
-      </a>
+        <span class="veil-text">Coming soon</span>
+      </div>
 
     </section>
 
     <section class="wrap coming">
-      <span class="coming-line">Coming soon</span>
+      <span class="coming-line">More tools coming soon</span>
     </section>
   </main>
 
